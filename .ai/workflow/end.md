@@ -1,314 +1,34 @@
-# Session End Workflow
+# Session 收工
 
+按任务规模执行；微可极简，中/大走全量。不自动 git commit。
 
-## Purpose
+## 规模
+| 规模 | 动作 |
+|---|---|
+| 微 | 确认改动符合预期即可 |
+| 小 | 核对 diff；有行为/接口影响则更新 docs；更新 memory「当前焦点」 |
+| 中 | 下文 1–6 |
+| 大 | 下文 1–6 + 确认 design-review 结论已落入 docs/ADR |
 
+## 1. 回顾
+改了什么、为何、结果；看 git status。
 
-Synchronize the result of the current session and leave enough context for the next session.
+## 2. 验收
+- 实现匹配需求；无无关 diff；符合约定
+- 测试：该加的加了；已知失败已说明
+- 无临时文件残留
 
+## 3. 文档
+按 sync 的影响表更新 docs；无影响则明确说「文档无更新」。
 
-Before ending a session, ensure:
+## 4. Memory
+更新「当前焦点」（完成则清空或改下一步）。有新雷区/调试结论则写入并标置信。不写流水账。超限先删 Assumed/过时条。
 
+## 5. 一致性
+代码 → docs → memory。冲突按优先级修正。
 
-- code state is clear;
-- documentation is synchronized;
-- important knowledge is preserved;
-- unfinished work is recorded.
+## 6. 交接摘要
+完成 / 改动文件 / 关键决策 / 已知问题 / 建议下一步。
 
-
----
-
-# 1. Review Session Changes
-
-
-Review:
-
-
-- files changed during this session;
-- implementation result;
-- current git status.
-
-
-Summarize:
-
-
-- What was changed?
-- Why was it changed?
-- What was the final result?
-
-
-
----
-
-# 2. Verify Implementation
-
-
-Check:
-
-
-## Code
-
-
-Confirm:
-
-
-- implementation matches requirements;
-- no unnecessary changes remain;
-- code follows project conventions.
-
-
-
-## Tests
-
-
-Confirm:
-
-
-- relevant tests were added or updated;
-- existing tests pass;
-- known failures are documented.
-
-
-
-## Scope
-
-
-Confirm:
-
-
-- unrelated files were not modified;
-- temporary files are removed.
-
-
-
----
-
-# 3. Synchronize Documentation
-
-
-Check whether changes affect:
-
-
-## Architecture
-
-
-Update if:
-
-
-- component boundaries changed;
-- data flow changed;
-- new architectural patterns introduced.
-
-
-Location:
-
-docs/architecture/
-
-
----
-
-## Components
-
-
-Update if:
-
-
-- component responsibility changed;
-- public interfaces changed;
-- important behavior changed.
-
-
-Location:
-
-
-docs/components/
-
-
----
-
-## Development
-
-
-Update if:
-
-
-- new commands added;
-- environment changed;
-- development workflow changed.
-
-
-Location:
-
-
-docs/development/
-
-
----
-
-## Operations
-
-
-Update if:
-
-
-- deployment changed;
-- configuration changed;
-- runtime behavior changed.
-
-
-Location:
-
-
-docs/operations/
-
-
----
-
-# 4. Update Project Memory
-
-
-Review:
-
-
-.ai/memory.md
-
-
-Update only when this session produced knowledge useful for future development.
-
-
-Good candidates:
-
-
-- important decisions;
-- new conventions;
-- discovered constraints;
-- debugging solutions;
-- common mistakes to avoid.
-
-
-
-Do not add:
-
-
-- temporary implementation details;
-- obvious code behavior;
-- information already clear from source code.
-
-
-
----
-
-# 5. Record Remaining Work
-
-
-If unfinished:
-
-
-Update:
-
-
-.ai/memory.md
-
-
-or:
-
-
-PROJECT_HISTORY.md
-
-
-Include:
-
-
-## Current Status
-
-
-What has been completed.
-
-
-## Remaining Tasks
-
-
-What still needs to be done.
-
-
-## Next Step
-
-
-The recommended continuation point.
-
-
-
----
-
-# 6. Check Consistency
-
-
-Verify:
-
-
-Code
-
-↓
-
-Documentation
-
-↓
-
-Memory
-
-
-are consistent.
-
-
-If conflicts exist:
-
-
-Prefer:
-
-
-1. Current code
-2. Tests
-3. Explicit decisions
-4. Documentation
-5. Memory assumptions
-
-
-
----
-
-# 7. Prepare Next Session Context
-
-
-Create a short summary:
-
-
-Session Summary:
-Completed:
-
-Changed:
-
-Important Decisions:
-
-Known Issues:
-
-Recommended Next Step:
-
-
-
----
-
-# 8. Git Status
-
-
-Before finishing:
-
-
-Check:
-
-
-- changed files;
-- untracked files;
-- generated files.
-
-
-Do not commit unless requested.
+## Git
+可报告 status；除非用户要求，不 commit。

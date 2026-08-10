@@ -1,532 +1,83 @@
-# Agent Protocol Bootstrap Standard
-
-版本: 1.0
-
-
-# 角色定义
-
-
-你正在帮助一个软件项目接入：
-
-Agent Protocol
-
-官方协议仓库：
-
-https://github.com/AlloVince/agent.protocol
-
-
-你的任务：
-
-初始化项目级 AI 协作环境。
-
-
-你不是代码生成器。
-
-你是：
-
-负责建立项目工程知识体系的高级工程师。
-
-
-
----
-
-# 1. 初始化目标
-
-
-通过 Agent Protocol，使项目具备：
-
-
-- 明确的 AI 工作规范；
-- 可持续维护的项目知识；
-- 标准化文档结构；
-- 可重复的开发流程；
-- 新 Session 快速恢复上下文能力。
-
-
-初始化完成后：
-
-新的 AI Session 应该能够通过阅读项目文档，快速达到熟悉项目一年以上工程师的理解水平。
-
-
-
----
-
-# 2. 首先确认项目类型
-
-
-开始前必须判断当前项目属于：
-
-
-## 模式 A：新项目初始化
-
-
-特征：
-
-- 没有业务代码；
-- 没有完整文档；
-- 项目处于设计或开发初期。
-
-
-处理方式：
-
-通过提问收集项目背景。
-
-
-
-## 模式 B：已有项目初始化
-
-
-特征：
-
-- 已存在代码；
-- 已存在文档；
-- 已存在工程约定。
-
-
-处理方式：
-
-分析现有项目，并迁移已有知识。
-
-
-
-不要假设项目类型。
-
-如果无法判断：
-
-询问用户。
-
-
-
----
-
-# 3. 新项目初始化流程
-
-
-如果是新项目：
-
-首先向用户提问。
-
-
-需要了解：
-
-
-## 项目目标
-
-- 项目名称；
-- 项目用途；
-- 解决的问题；
-- 目标用户。
-
-
-## 技术方向
-
-- 主要语言；
-- 技术栈；
-- 运行环境；
-- 数据存储；
-- 部署方式。
-
-
-## 工程要求
-
-- 项目规模；
-- 团队规模；
-- 发布方式；
-- 可靠性要求。
-
-
-## 特殊约束
-
-例如：
-
-- 性能要求；
-- 安全要求；
-- 兼容要求。
-
-
-
-根据回答生成：
-
-- AGENTS.md；
-- .ai/ai-profile.md；
-- .ai/memory.md；
-- docs 初始结构。
-
-
-
----
-
-# 4. 已有项目初始化流程
-
-
-如果是已有项目：
-
-
-首先分析：
-
-
-## 项目结构
-
-
-检查：
-
-- 目录结构；
-- 核心模块；
-- 构建方式；
-- 测试方式。
-
-
-
-## 技术栈
-
-
-识别：
-
-- 编程语言；
-- Runtime；
-- Framework；
-- Package Manager；
-- Database；
-- Infrastructure。
-
-
-
-## 现有文档
-
-
-检查：
-
-
-- README.md；
-- docs；
-- AI规则文件；
-- 架构文档；
-- 开发说明；
-- 部署文档。
-
-
-
-## 代码结构
-
-
-理解：
-
-- 核心模块；
-- 模块边界；
-- 数据流；
-- 重要依赖。
-
-
-
----
-
-# 5. 获取 Agent Protocol
-
-
-初始化前：
-
-
-获取最新版本：
-
-https://github.com/AlloVince/agent.protocol
-
-
-读取：
-
-- 文件结构；
-- 模板文件；
-- 默认文档。
-
-
-
-遵循协议中的文件规则。
-
-
-
----
-
-# 6. 文件处理规则
-
-
-## 普通 Markdown 文件
-
-
-格式：
-
-*.md
-
-
-含义：
-
-可直接复制。
-
-
-例如：
-
-.ai/defaults/engineering-defaults.md
-
-
-处理：
-
-复制到目标项目对应位置。
-
-
-
----
-
-## 模板文件
-
-
-格式：
-
-*.template.md
-
-
-含义：
-
-需要 Agent 根据项目生成。
-
-
-不能直接复制。
-
-
-处理流程：
-
-
-1. 阅读模板。
-
-2. 分析项目。
-
-3. 生成最终文件。
-
-4. 删除 template 后缀。
-
-
-
-例如：
-
-
-输入：
-
-AGENTS.template.md
-
-
-输出：
-
+# Bootstrap · Standard
+
+一次性接入。完成后靠 AGENTS + docs + workflow 自持，不再依赖本文件。
+协议：https://github.com/AlloVince/agent.protocol
+角色：建工程知识体系，不是写业务代码。中文、紧凑、不编造。
+
+## 目标
+新 session 只读 AGENTS 即可按需加载，达到接近熟练工程师的规范与项目地图（深度取决于首扫质量）。
+
+## 1. 模式
+**A 新项目** | **B 已有项目**。不假设；不清则问。
+
+## 2. 拉取协议
+获取协议仓，读结构、templates、defaults、workflow、memory.template、docs/spec。
+
+## 3. 选择 defaults
+问：偏好包目录名？默认 `defaults` → 业务仓 `.ai/defaults/`。
+须含：`preferences.md`、`ai-coding.md`。
+
+## 4A 新项目
+问：名称与一句话目标、用户/问题、语言与栈、运行与部署、硬约束（性能/安全/兼容）。
+按回答生成 AGENTS、memory、docs 骨架（空模块不建 components）。
+
+## 4B 已有项目（首扫）
+**范围**：源码主目录、README、现有 docs/AI 规则、包管理与锁文件、测试与 CI 配置、部署相关文件。
+**忽略**：`node_modules`、`.git`、构建产物、大资源、密钥文件内容。
+**深度**：识别核心模块边界、主数据流、启动/测试命令、既有约定；不要求读懂每一行。
+**输出**：先列「模块清单 + 待确认」，再写 docs。
+
+合并旧文档优先级：代码行为 > 测试 > 已确认文档 > 历史陈述 > 新生成。冲突标待确认。
+
+## 5. 文件规则
+| 类型 | 处理 |
+|---|---|
+| 普通 `.md`（defaults/workflow） | 复制到对应路径 |
+| `*.template.md` | 分析后生成终稿 |
+| 业务事实 | 只进 `docs/` |
+| AGENTS | 提纲+加载策略，无业务正文 |
+
+## 6. 目标结构
+```
 AGENTS.md
-
-
-
----
-
-# 7. Standard 项目结构
-
-
-标准项目生成：
-
-
-AGENTS.md
-PROJECT_HISTORY.md
 .ai/
-├── memory.md
-├── defaults/
-│   ├── engineering-defaults.md
-│   └── ai-coding-defaults.md
-├── workflow/
-│   ├── start.md
-│   ├── sync.md
-│   ├── end.md
-│   └── design-review.md
-└── skills/
+  memory.md
+  defaults/preferences.md
+  defaults/ai-coding.md
+  workflow/start.md
+  workflow/sync.md
+  workflow/end.md
+  workflow/design-review.md
 docs/
-├── architecture/
-├── components/
-├── development/
-└── operations/
-
-
-根据项目复杂度调整。
-
-
-不要为了完整结构创建无意义文件。
-
-
-
----
-
-# 8. 文档生成原则
-
-
-## 保留已有知识
-
-
-已有项目：
-
-
-不能简单覆盖。
-
-
-优先级：
-
-
-1. 当前代码行为
-
-2. 测试行为
-
-3. 已确认技术文档
-
-4. 历史记录
-
-5. 新生成内容
-
-
-
----
-
-## 避免制造虚假信息
-
-
-如果无法确定：
-
-不要猜测。
-
-
-记录：
-
-待确认
-
-
-或者向用户询问。
-
-
-
----
-
-# 9. 生成文件要求
-
-
-## AGENTS.md
-
-
-由：
-
-AGENTS.template.md
-
-
-生成。
-
-
-包含：
-
-
-- 项目介绍；
-- AI工作入口；
-- 文档加载规则；
-- 项目约束；
-- 重要链接。
-
-
-
----
-
-## ai-profile.md
-
-
-记录：
-
-
-- 项目身份；
-- 技术栈；
-- 环境；
-- 工具链；
-- 开发命令；
-- 特殊约束。
-
-
-
----
-
-## memory.md
-
-
-只记录长期有效知识。
-
-
-包括：
-
-- 架构事实；
-- 关键约束；
-- 重要经验。
-
-
-不要记录：
-
-- 临时任务；
-- 最近修改；
-- 可从代码直接获得的信息。
-
-
-
----
-
-# 10. 初始化限制
-
-
-初始化阶段：
-
-禁止：
-
-
-- 修改业务逻辑；
-- 重构代码；
-- 引入依赖；
-- 修改架构；
-- 自动修复问题。
-
-
-初始化只建立：
-
-AI工程协作环境。
-
-
-
----
-
-# 11. 完成检查
-
-
-完成前确认：
-
-
-□ 项目模式已确认
-
-□ Agent Protocol 已获取
-
-□ 文件结构符合协议
-
-□ AGENTS.md 已生成
-
-□ .ai 已初始化
-
-□ docs结构已建立
-
-□ 已有知识已保留
-
-□ 没有修改业务代码
-
-
-
----
-
-# 12. 输出结果
-
-
-完成后输出：
-
-
-初始化模式：
-项目分析：
-生成文件：
-迁移内容：
-未确认事项：
-后续建议：
+  index.md
+  architecture/overview.md
+  architecture/boundaries.md
+  architecture/adr/          # 可空，有决策再写
+  components/<module>/...    # 仅真实模块
+  development/setup.md
+  development/commands.md
+  development/testing.md
+  operations/...             # 有运维事实再写
+```
+无 skills、无 ai-profile、无 PROJECT_HISTORY。不建无意义空文件。
+
+## 7. 生成要点
+- **AGENTS**：填身份/边界/加载表；指向 `docs/index.md`；引用 defaults 与 workflow
+- **docs**：遵循 `docs/spec.md`；components 与代码模块一一对应
+- **memory**：五段+限高；首扫只放非显性约束与当前焦点
+- **index.md**：任务 → 路径短表，支撑按需加载
+
+## 8. 禁止
+改业务逻辑、重构、加依赖、改架构、当修复 session 用。只建协作环境与知识地图。
+
+## 9. 检查
+- [ ] 模式与 defaults 已确认
+- [ ] AGENTS 薄且无业务正文
+- [ ] workflow + defaults 已就位
+- [ ] docs 与真实模块对齐；index 可用
+- [ ] memory 限高
+- [ ] 旧知识已迁移或标待确认
+- [ ] 未改业务代码
+
+## 10. 报告
+模式 / 项目判断摘要 / defaults / 生成与迁移列表 / 待确认 / 后续建议。
