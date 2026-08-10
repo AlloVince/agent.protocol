@@ -72,6 +72,11 @@ agent.protocol 仓库中的结构：
 - standard
 - full
 
+agent.protocol 中的文件
+
+如果以 .md 结尾，代表这是一个可复制的文件, 如 .ai/defauts/engineering-defaults.md
+如果以 .template.md 代表这是一个模板文件，需要 Agent 根据业务仓库的实际情况读取模板生成 如 AGENTS.template.md 在目标业务仓库中生成 AGENTS.md
+
 
 ---
 
