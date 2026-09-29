@@ -1,67 +1,89 @@
-# docs 规范
+# Agent 文档准入规范
 
-给 bootstrap 与日常维护用。docs = 全部项目事实；可验证；按需加载。
+本文件约束业务仓 `docs/` 的写法。目标不是“文档齐全”，而是提高未来 Agent 的判断质量和恢复速度。
 
-## 目录
-```
-docs/
-├── index.md
-├── architecture/
-│   ├── overview.md
-│   ├── boundaries.md
-│   └── adr/           # 有决策再建
-├── components/
-│   └── <module>/      # 与代码模块对齐；改谁读谁
-├── development/
-│   ├── setup.md
-│   ├── commands.md
-│   └── testing.md
-└── operations/
-    ├── deploy.md
-    ├── config.md
-    └── runtime.md
-```
+## 1. 只有 Agent 增益才写
 
-## Profile 裁剪
-- **minimal**：`development/commands.md` + 极简 `architecture/overview.md`；可无 components/operations
-- **standard**：上表按真实情况生成；无的能力不建空目录凑数
-- **full**（未做）：另含 skills 等
+写入前至少满足一项：
 
-## index.md
-任务类型 → 文件路径的地图。AGENTS 可指向此文件。保持短表。
+- 减少未来 Agent 对领域/边界的误判
+- 避免重复做昂贵调查、逆向、数据验证
+- 减少每次都要加载大量源码才能恢复的上下文/Token
+- 保存代码/测试难以表达的外部事实、业务语义或跨系统约束
+- 保存高返工决策的原因、弃选与后果
+- 支持跨 session 长任务的复核、交接或重建
 
-## 模块文档 `components/<module>/`
-建议 `README.md`（或单文件 `components/<module>.md`，全仓统一一种）。
-必含：职责、边界（不做的）、主要接口/入口路径、依赖、雷区（若有）、相关代码路径。
-禁止：粘贴大段源码；写其它模块的说明书。
+如果信息只是在复述代码、记录本轮做了什么、或者为了“有文档”而写，就不要进入 docs。
 
-## architecture
-- overview：系统是什么、主路径、关键结构
-- boundaries：负责/不负责、模块边界
-- adr：重要决策（上下文/决策/弃选/后果）
+## 2. 没有强制目录树
 
-## development
-setup 环境；commands 常用命令；testing 怎么测、惯例。
+使用项目和社区本来就自然的名字。常见但非强制：
 
-## operations
-deploy；config（不写密钥原文）；runtime 运行特征与排障入口。
+- `docs/architecture.md`
+- `docs/design/...`
+- `docs/adr/...`
+- `docs/operations/...`
+- `docs/<domain>.md`
 
-## 单篇骨架（紧凑）
-```markdown
-# 标题
-## 何时读
-## 内容
-## 相关
-- 代码：
-- 其它 docs：
-```
-可选：`验证于：<日期或 commit>`
+不要为了协议创建空的 architecture/components/development/operations 分类。
 
-## 生成规则（bootstrap）
-1. 先扫代码与既有文档，再写；不确定标「待确认」，不编造
-2. 只为真实模块建 components
-3. 合并旧 AI 文档：代码 > 测试 > 已确认文档 > 历史 > 新生成
-4. 文风：中文、紧凑、少空行
+## 3. 文档与真实来源分工
 
-## 维护
-代码变更后按规模走 sync/end。稳定事实只留 docs；memory 不重复。
+优先级不是“文档永远正确”。真实行为应尽量由原生载体表达：
+
+- 代码/测试：实际行为
+- schema/migration：数据结构
+- package/lock/runtime config：依赖与版本
+- formatter/linter：风格
+- CI/deploy config：构建与部署流程
+- 正式 CLI `--help`：操作接口
+- docs：上述载体难以表达但未来 Agent 必须知道的语义
+
+发现 docs 与可执行事实冲突时，先验证，再修正文档或实现；不要保留两套真相。
+
+## 4. 设计文档
+
+Design 不是任务仪式。
+
+### 不落文档
+
+- 小改动
+- 可逆实现细节
+- 实现完成后从代码/测试即可清楚理解的方案
+- 只为当前会话服务的思考过程
+
+### 落普通 Design
+
+当一个结构、接口、数据流或产品机制会继续指导后续多轮实现，而且仅看代码恢复成本较高时，写普通设计文档。
+
+### 落 ADR
+
+当决定同时满足：
+
+- 高返工成本或跨模块/跨仓
+- 存在真实可行的替代方案
+- 未来维护者需要知道为什么选择当前方案
+
+才值得写 ADR。ADR 保留：上下文、决定、主要弃选、后果。不要写成长篇会议纪要。
+
+Design/ADR 可以演进，但演进必须显式：更新仍有效的设计文档，或用新的 ADR 标记 supersede/替代关系；不得让已失效方案继续以“当前设计”的口吻留在 docs。
+
+## 5. 长任务状态
+
+只有跨 session 继续确实需要时才保留轻量任务状态。它应回答：
+
+- 最终成果/verifier 是什么
+- 当前真实进展和最近证据
+- 下一步从哪里继续
+- 哪些阻塞是真阻塞
+- 哪些产物可重建、命令是什么
+
+完成后，把真正长期有用的事实迁到合适 docs；纯进度状态删除。Git 负责历史，不另造 session memory。
+
+## 6. owner 与 README
+
+- `README.md`：给人看的项目入口；不要塞 Agent 私有操作手册
+- `owner/`：人类长期意图；Agent 默认只读
+- `docs/`：允许写得更偏机器协作，不要求人类逐篇阅读
+
+人类临时需要理解 docs 时，可以由低成本模型按需提取，不因此维护一套重复的人类版文档。
