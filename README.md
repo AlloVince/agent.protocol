@@ -98,7 +98,7 @@ Bootstrap 是一次性剧本，不需要复制进业务仓。
 - `templates/AGENTS.project.md`：普通仓根 `AGENTS.md`
 - `templates/AGENTS.super.md`：`<system>.super` 根 `AGENTS.md`
 
-模板需要按真实项目删改；不要机械复制占位项和不存在的能力。
+模板需要按真实项目删改；不要机械复制占位项和不存在的能力。仓库文件中的导航使用仓内相对路径、注明布局前提的跨仓相对路径或仓库 URL，不固化个人机器的用户名、主目录或 checkout 绝对路径；生成和升级后检查路径泄露。
 
 ## 多仓 `.super`
 
